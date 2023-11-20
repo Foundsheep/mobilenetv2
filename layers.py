@@ -1,6 +1,5 @@
 import torch
 from torch import nn
-from torch.nn import functional as F
 
 
 class BottleneckResidualBlock(nn.Module):
@@ -22,14 +21,21 @@ class BottleneckResidualBlock(nn.Module):
 
     def forward(self, inputs):
         identity = nn.Identity()(inputs)
-        x = F.relu(self.bn_1(self.conv_1(inputs)))
-        x = F.relu(self.bn_2(self.conv_2_dw(x)))
+        x = F.relu6(self.bn_1(self.conv_1(inputs)))
+        x = F.relu6(self.bn_2(self.conv_2_dw(x)))
         x = self.bn_3(self.conv_2_pw(x))
 
         if self.stride == 1 and identity.size() == x.size():
             x += identity
         return x
 
+
+class MobileNetV2(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+    def forward(self):
+        pass
 
 def test():
     bottleneck_1 = BottleneckResidualBlock(first_channel=16, last_channel=32, factor=4, stride=1)
