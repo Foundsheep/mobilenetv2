@@ -24,6 +24,7 @@ setuptools==58.1.0
 six==1.16.0
 sympy==1.12
 torch==2.1.1
+torchsummary==1.5.1
 torchvision==0.16.1
 typing_extensions==4.8.0
 urllib3==2.1.0
