@@ -95,6 +95,8 @@ class MobileNetV2(nn.Module):
         x = self.layer_8_conv(x)
         x = self.layer_9_avp(x)
         x = self.layer_10_conv(x)
+        B, C, H, W = x.size()
+        x = x.view(B, int(C*H*W))
         return x
 
 
@@ -116,3 +118,7 @@ def test_model():
 
 if __name__ == "__main__":
     test_model()
+    inputs = torch.randn((100, 3, 224, 224))
+    model = MobileNetV2(class_num=10)
+    outputs = model(inputs)
+    print(outputs.size())
